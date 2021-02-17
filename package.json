@@ -1,0 +1,16 @@
+{
+  "name": "slotted-element",
+  "version": "0.0.0",
+  "description": "Webcomponent fetch-element and slotted-element",
+  "author": "slotted-element",
+  "license": "MIT",
+  "main": "index.js",
+  "module": "index.js",
+  "type": "module",
+  "scripts": {
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+  }
+}

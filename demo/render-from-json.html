@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>render from json - FetchElement</title>
+</head>
+<body>
+<fieldset>
+    <legend>Custom renderer</legend>
+
+    <json-render-element src="doc.json"></json-render-element>
+    <script type="module">
+        import FetchElement from '../src/FetchElement.js';
+        window.customElements.define('json-render-element',
+        class JsonElement extends FetchElement
+        {
+            data2Html(json)
+            {
+                return `<h1>${ json.name }</h1>
+                        <img src="${ json.portrait }" />
+                        `;
+            }
+        });
+    </script>
+</fieldset>
+
+<fieldset>
+    <legend>Default as table</legend>
+
+    <script type="module" src="../fetch-element.js"></script>
+    <fetch-element src="doc.json"></fetch-element>
+</fieldset>
+
+<fieldset>
+    <legend>Array as table</legend>
+
+    <fetch-element src="dwarfs.json"></fetch-element>
+</fieldset>
+
+</body>
+</html>

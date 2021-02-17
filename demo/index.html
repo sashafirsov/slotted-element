@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+    <meta charset="utf-8">
+    <style>
+        body {
+            background: #fafafa;
+        }
+        demo-section{ display: block; border: blueviolet dashed 1px; border-radius: 1rem; padding: 1rem; }
+    </style>
+</head>
+<body>
+<script type="module" src="../slotted-element.js"></script>
+
+<demo-section>
+    <slotted-element src="embedded.html"></slotted-element>
+</demo-section>
+
+<demo-section>
+    <slotted-element src="https://badUrl.heck">
+        <p slot="loading">Loading... ⏳ </p>
+        <p slot="error">Something went wrong. 😭 </p>
+    </slotted-element>
+</demo-section>
+<script src="../node_modules/prismjs/prism.js"></script>
+<script type="module">
+    class DemoSection extends HTMLElement
+    {
+        // constructor(){ super(); }
+        connectedCallback()
+        {
+            const html = Prism.highlight( this.innerHTML, Prism.languages.html, 'html' );
+            const code = document.createElement( 'code' );
+            code.className='language-markup';
+            code.innerHTML = html+'<hr/>';
+            this.insertBefore( code, this.firstChild );
+        }
+    };
+    window.customElements.define( 'demo-section', DemoSection);
+    // https://www.webcomponents.org/search/highlight
+    // https://www.webcomponents.org/element/@kuscamara/code-sample
+// https://www.webcomponents.org/element/@vanillawc/wc-markdown
+</script>
+</body>
+</html>

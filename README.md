@@ -1,11 +1,14 @@
 # fetch-element and slotted-element
+<a href="https://github.com/sashafirsov/slotted-element">
+    <img src="https://github.githubassets.com/images/icons/emoji/octocat.png" style="height: 2rem"/></a>
+
 covering the typical UI tasks:
 1. fetch data via [fetch() api](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
 2. populate data into UI via custom render callback or included content-type sensitive renderers: JSON to table or html.
 3. control UI parts(slots) depending on fetch state. 
 
-Slots without shadow DOM primarily would be used for remotely fetched data render. 
-That is why the `slotted-element` is derived from `fetch-element`.
+As slots **without shadow DOM** primarily would be used for remotely fetched data render, 
+the `slotted-element` is derived from `fetch-element`.
 
 # Use
 1. if use CDN, skip this step. Otherwise add `slotted-element` dependency to project via package manager like npm, yarn, bower, bit.dev. 

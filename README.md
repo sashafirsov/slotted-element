@@ -21,16 +21,16 @@ the `slotted-element` is derived from `fetch-element`.
 2. Import into page/module either by ES6 import or simple SCRIPT tag
 3. In page body add  ```<fetch-element src="url/to/some.html"></fetch-element>``` or 
    
-    ```
+```
     <slotted-element src="url/to/some.json">
         <i slot="loading"> Loading... please wait. </i>
         <i slot="errror"> System error, please try again.  </i>
-        <frameset>
+        <fieldset>
             <legend>Object or array from JSON</legend>
             <div slot="done"></div>
-        </frameset>
+        </fieldset>
    </slotted-element>       
-    ```
+```
 
 # slotted-element
 Gives ability to use slots **without shadowDOM** and exposes API to work with slots programmatically by adding and 

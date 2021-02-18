@@ -1,11 +1,15 @@
 # fetch-element and slotted-element
-<a href="https://github.com/sashafirsov/slotted-element">
-    <img src="https://github.githubassets.com/images/icons/emoji/octocat.png" width="32" height="32" alt="github link"/></a>
 
 covering the typical UI tasks:
 1. fetch data via [fetch() api](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
 2. populate data into UI via custom render callback or included content-type sensitive renderers: JSON to table or html.
-3. control UI parts(slots) depending on fetch state. 
+3. control UI parts(slots) depending on fetch state.
+
+[![git](https://cdnjs.cloudflare.com/ajax/libs/octicons/8.5.0/svg/mark-github.svg) GitHub](https://github.com/sashafirsov/slotted-element)
+| [demo TBD](https://cdn.xml4jquery.com/ajax/libs/embed-page/0.0.21/build/esm-unbundled/demo/index.html)
+| [tests project](https://github.com/sashafirsov/slotted-element-test)
+[![NPM version][npm-image]][npm-url]
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/slotted-element)
 
 As slots **without shadow DOM** primarily would be used for remotely fetched data render, 
 the `slotted-element` is derived from `fetch-element`.
@@ -13,7 +17,7 @@ the `slotted-element` is derived from `fetch-element`.
 # Use
 1. if use CDN, skip this step. Otherwise add `slotted-element` dependency to project via package manager like npm, yarn, bower, bit.dev. 
    Or simply place `fetch-element.js` and `slotted-element.js` into project tree
-2. Import into page/module either by ES6 import, simple SCRIPT tag
+2. Import into page/module either by ES6 import or simple SCRIPT tag
 3. Include   ```<fetch-element src="url/to/some.html">``` or 
    
     ```
@@ -24,11 +28,13 @@ the `slotted-element` is derived from `fetch-element`.
             <legend>Object or array from JSON</legend>
             <div slot="done"></div>
         </frameset>
-   </slotted-element>    
+   </slotted-element>       
     ```
 
 # slotted-element
-1. Exposes API to work with slots programmatically by adding and removing slots by slot name.
+Gives ability to use slots without shadowDOM and exposes API to work with slots programmatically by adding and removing slots by slot name.
+
+Coupled with `fetch-element` it provides UI management for each stage of data fetch and transforming to UI.  
 
 The slots concept is described in 
 [using slots in MDN](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_templates_and_slots#adding_flexibility_with_slots)
@@ -78,5 +84,16 @@ Callbacks:
 `fetch-element` could be self-sufficient without using a slots pattern: the `state` attribute is available to trigger 
 visibility of internal dom subtree branches by `[state="xxx"] ...` selector. 
 
-# test
-reside in separate repository https://github.com/sashafirsov/slotted-element-test
+## Credits
+The `fetch-element` is inspired by ideas of [iron-ajax](https://github.com/PolymerElements/iron-ajax) in regards of
+using properties for declarative programming. Unlike `iron-ajax` in `fetch-element` the primary use is not in data share 
+via binding (which requires framework like PolymerJS) but in providing the data to callbacks via inheritance or runtime 
+methods override for purpose of internal content render.
+
+# test and demo
+reside in separate repository https://github.com/sashafirsov/slotted-element-test to avoid unnecessary dependency in 
+source repo and npm.
+
+
+[npm-image]:      https://img.shields.io/npm/v/slotted-element.svg
+[npm-url]:        https://npmjs.org/package/slotted-element

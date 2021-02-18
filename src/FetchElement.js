@@ -8,6 +8,7 @@ wait4DomUpdated( cb )
 }
     export function
 toKebbabCase(s){ return (s||'').toLowerCase().replaceAll(/\s/g ,'-')}
+
     export class
 FetchElement extends HTMLElement
 {

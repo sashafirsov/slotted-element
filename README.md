@@ -1,6 +1,6 @@
 # fetch-element and slotted-element
 <a href="https://github.com/sashafirsov/slotted-element">
-    <img src="https://github.githubassets.com/images/icons/emoji/octocat.png" style="height: 2rem"/></a>
+    <img src="https://github.githubassets.com/images/icons/emoji/octocat.png" width="32" height="32" alt="github link"/></a>
 
 covering the typical UI tasks:
 1. fetch data via [fetch() api](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)

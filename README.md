@@ -1,8 +1,28 @@
 # fetch-element and slotted-element
+covering the typical UI tasks:
+1. fetch data via [fetch() api](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
+2. populate data into UI via custom render callback or included content-type sensitive renderers: JSON to table or html.
+3. control UI parts(slots) depending on fetch state. 
+
 Slots without shadow DOM primarily would be used for remotely fetched data render. 
 That is why the `slotted-element` is derived from `fetch-element`.
 
-Size is 5k+2k source, served total 5K gzipped.
+# Use
+1. if use CDN, skip this step. Otherwise add `slotted-element` dependency to project via package manager like npm, yarn, bower, bit.dev. 
+   Or simply place `fetch-element.js` and `slotted-element.js` into project tree
+2. Import into page/module either by ES6 import, simple SCRIPT tag
+3. Include   ```<fetch-element src="url/to/some.html">``` or 
+   
+    ```
+    <slotted-element src="url/to/some.json">
+        <i slot="loading"> Loading... please wait. </i>
+        <i slot="errror"> System error, please try again.  </i>
+        <frameset>
+            <legend>Object or array from JSON</legend>
+            <div slot="done"></div>
+        </frameset>
+   </slotted-element>    
+    ```
 
 # slotted-element
 1. Exposes API to work with slots programmatically by adding and removing slots by slot name.

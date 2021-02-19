@@ -102,7 +102,7 @@ FetchElement extends HTMLElement
             }else if( this.contentType.includes( 'json' ) )
             {   await wait4DomUpdated();
                 const html = this.data2Html( result, this.contentType, this.status, this.responseHeaders );
-                this.innerHTML = html || this.json2table(result);
+                this.innerHTML = html || this.json2table(result,[]);
                 await wait4DomUpdated();
             }
         }finally
@@ -115,20 +115,20 @@ FetchElement extends HTMLElement
 
     getKeys( obj ){ return Object.keys(obj); }
 
-    json2table( data )
+    json2table( data, path )
     {
         if( Array.isArray(data) )
         {   if( !data.length )
-            return ''
+                return '';
             const keys = this.getKeys( data[0] );
 
             return `
 <table>
     <tr>${keys.map( k=>`<th>${k}</th>` ).join('\n')}</tr>
-    ${data.map( r=>`
+    ${data.map( (r,i)=>`
     <tr>${ keys.map(k=>`
         <td key="${toKebbabCase(k)}">
-            ${this.json2table(r[k])}
+            ${this.json2table(r[k],[...path,i,k])}
         </td>`).join('')
         }
     </tr>`).join('\n')}
@@ -141,7 +141,7 @@ FetchElement extends HTMLElement
 <table>
     ${ keys.map( k=>`
 <tr><th>${k}</th>
-    <td key="${toKebbabCase(k)}">${ this.json2table(data[k]) }</td>
+    <td key="${toKebbabCase(k)}">${ this.json2table(data[k],[...path,k]) }</td>
 </tr>` ).join('')}
 </table>
 `

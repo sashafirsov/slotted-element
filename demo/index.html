@@ -6,8 +6,10 @@
         body {
             background: #fafafa;
         }
-        demo-section{ display: block; border: blueviolet dashed 1px; border-radius: 1rem; padding: 1rem; }
+        demo-section{ display: block; border: blueviolet dashed 1px; border-radius: 1rem; padding: 1rem; margin: 1rem; }
     </style>
+    <link href="https://unpkg.com/prismjs@1.23.0/themes/prism.css" rel="stylesheet" />
+
 </head>
 <body>
 <script type="module" src="../slotted-element.js"></script>
@@ -22,7 +24,9 @@
         <p slot="error">Something went wrong. 😭 </p>
     </slotted-element>
 </demo-section>
-<script src="../node_modules/prismjs/prism.js"></script>
+<script src="https://unpkg.com/prismjs@1.23.0/components/prism-core.min.js"></script>
+<script src="https://unpkg.com/prismjs@1.23.0/components/prism-markup.min.js"></script>
+<script src="https://unpkg.com/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
 <script type="module">
     class DemoSection extends HTMLElement
     {

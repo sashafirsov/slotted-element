@@ -1,4 +1,4 @@
-import FetchElement from './fetch-element.js';
+import FetchElement  from './fetch-element.js';
     export class
 SlottedElement extends FetchElement
 {
@@ -6,10 +6,7 @@ SlottedElement extends FetchElement
     {   super();
         this.slotsInit();
     }
-    connectedCallback()
-    {
-
-    }
+    // connectedCallback(){}
 
     fetch( url, options )
     {
@@ -17,7 +14,17 @@ SlottedElement extends FetchElement
         return super.fetch( url, options ).finally( ()=>this.slotOnly(this.state) );
     }
 
-    // onError( error ){ this.slotAdd('error'); }
+    setContent( html )
+    {
+        if( this.slots.loaded )
+        {
+            const slot = this.slotClone('loaded')
+            slot.innerHTML = html;
+            this.slotAdd(slot);
+        }else
+            this.innerHTML = html;
+    }
+
 
     // slot API
 
@@ -28,7 +35,15 @@ SlottedElement extends FetchElement
             this.slots[ slot.slot ] = slot;
     }
 
-    slotOnly( name ){ this.slotsClear(); this.slotAdd(name); }
+    slotOnly( name )
+    {
+        for( let el of this.querySelectorAll( '[slot-cloned]' ) )
+            if( el.slot !== name )
+                el.remove();
+
+        if( !this.querySelector( `[slot="${name}"][slot-cloned]` ) )
+            this.slotAdd(name);
+    }
 
     slotsClear()
     {

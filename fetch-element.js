@@ -94,6 +94,7 @@ FetchElement extends HTMLElement
         return response.text();
     }
 
+    setContent( html ){ this.innerHTML = html; }
     async onResult( result )
     {
         try
@@ -107,7 +108,7 @@ FetchElement extends HTMLElement
                 // todo xslt from xml
             }else if( this.contentType.includes( 'html' ) )
             {
-                this.innerHTML = result;
+                this.setContent(result);
                 await wait4DomUpdated();
                 this.data2Html( result, this.contentType, this.status, this.responseHeaders );
                 await wait4DomUpdated();
@@ -115,7 +116,7 @@ FetchElement extends HTMLElement
             {
                 await wait4DomUpdated();
                 const html = this.data2Html( result, this.contentType, this.status, this.responseHeaders );
-                this.innerHTML = html || this.json2table( result, [] );
+                this.setContent( html || this.json2table( result, [] ) );
                 await wait4DomUpdated();
             }
         }finally

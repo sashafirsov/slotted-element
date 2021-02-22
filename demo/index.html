@@ -23,6 +23,43 @@
         <p slot="error" hidden>Something went wrong. 😭 </p>
     </slotted-element>
 </demo-section>
+
+
+<demo-section>
+    <slotted-element src="embedded.html">
+        <fieldset>
+            <legend> Content would be placed inside </legend>
+            <p slot="loading" hidden> Loading... ⏳ </p>
+            <p slot="error" hidden> What could be wrong? </p>
+            <p slot="loaded" hidden> Replaced with content of <b>embedded.html</b> </p>
+        </fieldset>
+    </slotted-element>
+</demo-section>
+
+
+<demo-section>
+    <slotted-element src="doc.json">
+        <fieldset>
+            <legend> <b>doc.json</b> as table </legend>
+            <p slot="loaded" hidden>  </p>
+        </fieldset>
+    </slotted-element>
+</demo-section>
+
+
+
+<demo-section>
+    <slotted-element src="dwarfs.json">
+        <fieldset>
+            <legend> array <b>dwarfs.json</b> as table </legend>
+            <p slot="loaded" hidden>  </p>
+        </fieldset>
+    </slotted-element>
+</demo-section>
+
+
+
+
 <script type="module">
     for( let el of document.querySelectorAll('demo-section') )
         el.initialHTML = el.innerHTML;
@@ -42,11 +79,8 @@
             pre.innerHTML = `<code class="language-markup" >${html}</code>`;
             this.insertBefore( pre, this.firstChild );
         }
-    };
+    }
     window.customElements.define( 'demo-section', DemoSection);
-    // https://www.webcomponents.org/search/highlight
-    // https://www.webcomponents.org/element/@kuscamara/code-sample
-    // https://www.webcomponents.org/element/@vanillawc/wc-markdown
 </script>
 </body>
 </html>

@@ -12,7 +12,6 @@
 
 </head>
 <body>
-<script type="module" src="../slotted-element.js"></script>
 
 <demo-section>
     <slotted-element src="embedded.html"></slotted-element>
@@ -20,30 +19,34 @@
 
 <demo-section>
     <slotted-element src="https://badUrl.heck">
-        <p slot="loading">Loading... ⏳ </p>
-        <p slot="error">Something went wrong. 😭 </p>
+        <p slot="loading" hidden>Loading... ⏳ </p>
+        <p slot="error" hidden>Something went wrong. 😭 </p>
     </slotted-element>
 </demo-section>
+<script type="module">
+    for( let el of document.querySelectorAll('demo-section') )
+        el.initialHTML = el.innerHTML;
+</script>
+<script type="module" src="../slotted-element.js"></script>
+
 <script src="https://unpkg.com/prismjs@1.23.0/components/prism-core.min.js"></script>
 <script src="https://unpkg.com/prismjs@1.23.0/components/prism-markup.min.js"></script>
 <script src="https://unpkg.com/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
 <script type="module">
     class DemoSection extends HTMLElement
     {
-        // constructor(){ super(); }
         connectedCallback()
-        {
-            const html = Prism.highlight( this.innerHTML, Prism.languages.html, 'html' );
-            const code = document.createElement( 'code' );
-            code.className='language-markup';
-            code.innerHTML = html+'<hr/>';
-            this.insertBefore( code, this.firstChild );
+        {   const cr = t  => document.createElement( t )
+            , html = Prism.highlight( this.initialHTML, Prism.languages.html, 'html' )
+            , pre = cr( 'pre' );
+            pre.innerHTML = `<code class="language-markup" >${html}</code>`;
+            this.insertBefore( pre, this.firstChild );
         }
     };
     window.customElements.define( 'demo-section', DemoSection);
     // https://www.webcomponents.org/search/highlight
     // https://www.webcomponents.org/element/@kuscamara/code-sample
-// https://www.webcomponents.org/element/@vanillawc/wc-markdown
+    // https://www.webcomponents.org/element/@vanillawc/wc-markdown
 </script>
 </body>
 </html>

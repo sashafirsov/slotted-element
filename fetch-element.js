@@ -22,7 +22,7 @@ FetchElement extends HTMLElement
 
     abort(){}
 
-    fetch(){}
+    fetch(...args){ return this._fetch(...args); }
 
     constructor()
     {
@@ -32,7 +32,7 @@ FetchElement extends HTMLElement
         const { signal } = controller;
 
         this.abort = () => controller.abort();
-        this.fetch = async( url, options ) =>
+        this._fetch = async( url, options ) =>
         {
             this.state = 'loading';
             this.status = '';
@@ -44,11 +44,10 @@ FetchElement extends HTMLElement
                 , signal
             };
 
-            promise = new Promise( async( resolve, reject ) =>
+            return promise = new Promise( async( resolve, reject ) =>
             {
                 try
-                {
-                    const response = await fetch( url, opt );
+                {   const response = await fetch( url, opt );
                     const ret = await this.onResponse( response )
                     const res = await this.onResult( ret );
                     this.error ? reject( this.error ) : resolve( res );

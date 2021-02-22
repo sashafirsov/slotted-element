@@ -1,73 +1,23 @@
+import FetchElement from './fetch-element.js';
     export class
-SlottedElement extends HTMLElement
+SlottedElement extends FetchElement
 {
-
-    static get observedAttributes(){ return [ 'src', 'method', 'headers' ]; }
-
+    constructor()
+    {   super();
+        this.slotsInit();
+    }
     connectedCallback()
     {
-        this.slotsInit();
+
     }
 
     fetch( url, options )
     {
-        this.slotsClear();
-        this.slotAdd('loading');
-        const opt = {   method  : this.getAttribute( 'method' ) || 'GET'
-            ,   headers : this.headers
-            ,   ...options
-        };
-
-        return fetch( url, opt )
-            .then( response => this.onResponse( response ) )
-            .then( result => this.onResult( result ) )
-            .catch( error => this.onError( error ) );
+        this.slotOnly('loading')
+        return super.fetch( url, options ).finally( ()=>this.slotOnly(this.state) );
     }
 
-    get headers(){ return {} }
-
-    onResponse( response )
-    {
-        this.contentType = response.headers.get( 'content-type' );
-        if( this.contentType.includes( 'json' ) )
-            return response.json();
-        return response.text();
-    }
-
-    onResult( result )
-    {
-        if( this.contentType.includes( 'xml' ) )
-        {
-            ( new window.DOMParser() ).parseFromString( result, "text/xml" );
-            // todo xslt from xml
-        }else if( this.contentType.includes( 'html' ) )
-        {
-            this.innerHTML = result;
-            // todo evaluate scripts
-        }else if( this.contentType.includes( 'json' ) )
-        {
-
-        }
-        this.slotAdd( 'done' );
-    }
-
-    onError( error ){ this.slotAdd('error'); }
-
-    attributeChangedCallback( name, oldValue, newValue )
-    {
-        console.log( 'attributeChangedCallback', name, oldValue, newValue );
-
-        this[ name ] = newValue;
-        switch( name )
-        {
-            case 'headers':
-                this[ name ] = eval( newValue );
-                break;
-            case 'src':
-                setTimeout( () => this.fetch( newValue ) )
-                break;
-        }
-    }
+    // onError( error ){ this.slotAdd('error'); }
 
     // slot API
 
@@ -77,6 +27,8 @@ SlottedElement extends HTMLElement
         for( let slot of this.querySelectorAll( '[slot]' ) )
             this.slots[ slot.slot ] = slot;
     }
+
+    slotOnly( name ){ this.slotsClear(); this.slotAdd(name); }
 
     slotsClear()
     {
@@ -98,7 +50,7 @@ SlottedElement extends HTMLElement
     slotAdd( node ) // name or node created by slotClone(name)
     {
         const slot = node.slot ? node: this.slotClone( node )
-            ,      ref = this.slots[ node.slot ];
+        ,      ref = this.slots[ node.slot || node ];
         return ref && ref.parentElement.insertBefore( slot, ref );
     }
 

@@ -3,29 +3,30 @@
 <head>
     <meta charset="utf-8">
     <style>
-        body {
-            background: #fafafa;
-        }
-        demo-section{ display: block; border: blueviolet dashed 1px; border-radius: 1rem; padding: 1rem; margin: 1rem; }
-    </style>
-    <link href="https://unpkg.com/prismjs@1.23.0/themes/prism.css" rel="stylesheet" />
 
+    </style>
 </head>
 <body>
 
-<demo-section>
+<h1> slotted-element demo </h1>
+<a href=""><img src="https://cdnjs.cloudflare.com/ajax/libs/octicons/8.5.0/svg/mark-github.svg">git</a> |
+<a href="render-from-json.html"> fetch-element demo </a>
+<p>
+    <var>slotted-element</var> is web component implementing slots without shadow DOM.
+    It is based on <var>fetch-element</var> component to fetch data and render from retrieved JSON or HTML.
+</p>
+<html-demo-element>
     <slotted-element src="embedded.html"></slotted-element>
-</demo-section>
+</html-demo-element>
 
-<demo-section>
+<html-demo-element title="Error case">
     <slotted-element src="https://badUrl.heck">
         <p slot="loading" hidden>Loading... ⏳ </p>
         <p slot="error" hidden>Something went wrong. 😭 </p>
     </slotted-element>
-</demo-section>
+</html-demo-element>
 
-
-<demo-section>
+<html-demo-element>
     <slotted-element src="embedded.html">
         <fieldset>
             <legend> Content would be placed inside </legend>
@@ -34,53 +35,28 @@
             <p slot="loaded" hidden> Replaced with content of <b>embedded.html</b> </p>
         </fieldset>
     </slotted-element>
-</demo-section>
+</html-demo-element>
 
-
-<demo-section>
+<html-demo-element>
     <slotted-element src="doc.json">
         <fieldset>
             <legend> <b>doc.json</b> as table </legend>
             <p slot="loaded" hidden>  </p>
         </fieldset>
     </slotted-element>
-</demo-section>
+</html-demo-element>
 
-
-
-<demo-section>
+<html-demo-element>
     <slotted-element src="dwarfs.json">
         <fieldset>
             <legend> array <b>dwarfs.json</b> as table </legend>
             <p slot="loaded" hidden>  </p>
         </fieldset>
     </slotted-element>
-</demo-section>
+</html-demo-element>
 
-
-
-
-<script type="module">
-    for( let el of document.querySelectorAll('demo-section') )
-        el.initialHTML = el.innerHTML;
-</script>
+<script type="module" src="https://unpkg.com/html-demo-element@1.0.0/html-demo-element.js"></script>
 <script type="module" src="../slotted-element.js"></script>
 
-<script src="https://unpkg.com/prismjs@1.23.0/components/prism-core.min.js"></script>
-<script src="https://unpkg.com/prismjs@1.23.0/components/prism-markup.min.js"></script>
-<script src="https://unpkg.com/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
-<script type="module">
-    class DemoSection extends HTMLElement
-    {
-        connectedCallback()
-        {   const cr = t  => document.createElement( t )
-            , html = Prism.highlight( this.initialHTML, Prism.languages.html, 'html' )
-            , pre = cr( 'pre' );
-            pre.innerHTML = `<code class="language-markup" >${html}</code>`;
-            this.insertBefore( pre, this.firstChild );
-        }
-    }
-    window.customElements.define( 'demo-section', DemoSection);
-</script>
 </body>
 </html>

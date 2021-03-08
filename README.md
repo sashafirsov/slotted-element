@@ -74,12 +74,12 @@ fetch lifecycle overrides:
   conversion according to content type. 
   Returns data promise from `response.json()` or `response.text()`
 * `async onResult( result )` - called when data available. 
-  Invokes `data2Html( data, contentType, code )` callback and if it does not return anything 
+  Invokes `render( data, contentType, code )` callback and if it does not return anything 
   renders content either from JSON as table or text as HTML
   Sets `state="loaded"`
 
 Callbacks:
-* `data2Html( data, contentType, code, responseHeaders )` callback allows to apply data 
+* `render( data, contentType, code, responseHeaders )` callback allows to apply data 
   which could be used for inner DOM changing.
   Returns
     * html string to be populated as internal content or
@@ -96,6 +96,7 @@ all attributes reflected as component properties
 * `headers` - JS expression to be evaluated as string key-value object
 * `state` - '' or one of `loading`( fetch started ), `rendering`, `loaded`, `error`
 * `status` - http code response.status
+* `skiprender` - set to 'true' to omit response rendering. Used when binding to fetch-element via events.
 
 NOTE: for defining the payload in http request leave `src` undefined and call `fetch(url, options)` with needed parameters
  
@@ -106,8 +107,8 @@ visibility of internal dom subtree branches by `[state="xxx"] ...` selector.
 ## Credits
 The `fetch-element` is inspired by ideas of [iron-ajax](https://github.com/PolymerElements/iron-ajax) in regards of
 using properties for declarative programming. Unlike `iron-ajax` in `fetch-element` the primary use is not in data share 
-via binding (which requires framework like PolymerJS) but in providing the data to callbacks via inheritance or runtime 
-methods override for purpose of internal content render.
+via binding (which requires framework like PolymerJS) but in response rendering as table. 
+The data and content rendering customization is done by callbacks via inheritance or runtime methods override.
 
 # test and demo
 reside in separate repository https://github.com/sashafirsov/slotted-element-test to avoid unnecessary dependency in 

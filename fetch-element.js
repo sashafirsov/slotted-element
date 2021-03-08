@@ -16,7 +16,7 @@ toKebbabCase( s )
     export class
 FetchElement extends HTMLElement
 {
-    static get observedAttributes(){ return [ 'src', 'method', 'headers', 'state', 'status', 'error' ]; }
+    static get observedAttributes(){ return  [ 'src', 'method', 'headers', 'state', 'status', 'error', 'skiprender' ]; }
 
     get headers(){ return {} }
 
@@ -68,13 +68,11 @@ FetchElement extends HTMLElement
     attributeChangedCallback( name, oldValue, newValue )
     {
         switch( name )
-        {
-            case 'headers':
+        {   case 'headers':
                 this[ name ] = eval( newValue );
                 break;
             case 'src':
                 this.fetch( newValue );
-                // setTimeout( () => this.fetch( newValue ),0 );
                 break;
             default:
                 if( this[ name ] !== newValue )
@@ -95,27 +93,29 @@ FetchElement extends HTMLElement
     }
 
     setContent( html ){ this.innerHTML = html; }
+    
     async onResult( result )
     {
         try
-        {
+        {   if( this.skiprender )
+                return;
             this.state = 'rendering';
 
             if( this.contentType.includes( 'xml' ) )
             {
                 const xml = ( new window.DOMParser() ).parseFromString( result, "text/xml" );
-                this.data2Html( xml, this.contentType, this.status, this.responseHeaders );
+                this.render( xml, this.contentType, this.status, this.responseHeaders );
                 // todo xslt from xml
             }else if( this.contentType.includes( 'html' ) )
             {
                 this.setContent(result);
                 await wait4DomUpdated();
-                this.data2Html( result, this.contentType, this.status, this.responseHeaders );
+                this.render( result, this.contentType, this.status, this.responseHeaders );
                 await wait4DomUpdated();
             }else if( this.contentType.includes( 'json' ) )
             {
                 await wait4DomUpdated();
-                const html = this.data2Html( result, this.contentType, this.status, this.responseHeaders );
+                const html = this.render( result, this.contentType, this.status, this.responseHeaders );
                 this.setContent( html || this.json2table( result, [] ) );
                 await wait4DomUpdated();
             }
@@ -125,7 +125,7 @@ FetchElement extends HTMLElement
         }
     }
 
-    data2Html( data, contentType, code ){}
+    render( data, contentType, httpCode, responseHeaders ){}
 
     onError( error )
     {

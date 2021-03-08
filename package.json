@@ -1,16 +1,33 @@
 {
-  "name": "slotted-element",
-  "version": "0.0.0",
-  "description": "Webcomponent fetch-element and slotted-element",
-  "author": "slotted-element",
-  "license": "MIT",
-  "main": "index.js",
-  "module": "index.js",
-  "type": "module",
-  "scripts": {
-  },
-  "dependencies": {
-  },
-  "devDependencies": {
-  }
+    "name": "slotted-element",
+    "version": "0.0.0",
+    "description": "Web component fetch-element for ajax and render JSON as table and slotted-element without shadow DOM",
+    "author":
+    {   "name": "Sasha Firsov",
+        "email": "suns@simulationworks.com",
+        "url": "https://blog.firsov.net/"
+    },
+    "homepage": "https://github.com/sashafirsov/slotted-element",
+    "bugs": "https://github.com/sashafirsov/slotted-element/issues",
+    "keywords":
+    [   "JS",
+        "Vanilla",
+        "ShadowDOM",
+        "Web Component",
+        "WebComponent"
+    ],
+    "license": "Apache-2.0",
+    "browser": "slotted-element.js",
+    "module": "slotted-element.js",
+    "type": "module",
+    "scripts":
+    {
+        "test": "echo 'test is implemented in https://github.com/sashafirsov/slotted-element-test' && exit 0"
+    },
+    "devDependencies": {},
+    "funding":
+    {   "type" : "patreon",
+        "url" : "https://www.patreon.com/sashafirsov"
+    }
+
 }

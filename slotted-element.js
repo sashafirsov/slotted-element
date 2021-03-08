@@ -2,11 +2,17 @@ import FetchElement  from './fetch-element.js';
     export class
 SlottedElement extends FetchElement
 {
+    static get template()
+    {   return `
+<div slot="loading">loading...</div>
+<div slot="error">System error</div>
+<div slot="loaded"></div>
+`   }
+
     constructor()
     {   super();
         this.slotsInit();
     }
-    // connectedCallback(){}
 
     fetch( url, options )
     {

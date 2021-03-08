@@ -14,10 +14,10 @@
         window.customElements.define('json-render-element',
             class JsonElement extends FetchElement
             {
-                data2Html(json)
+                render(json)
                 {
                     return `<h1>${ json.name }</h1>
-                        <img src="${ json.portrait }" />
+                        <img src="${ json.portrait }" alt="" />
                         `;
                 }
             });

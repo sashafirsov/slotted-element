@@ -97,7 +97,7 @@ FetchElement extends HTMLElement
     async onResult( result )
     {
         try
-        {   if( this.skiprender )
+        {   if( this.hasAttribute('skiprender') )
                 return;
             this.state = 'rendering';
 

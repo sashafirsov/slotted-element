@@ -6,8 +6,10 @@ are covering the typical UI tasks:
 3. control UI parts(slots) depending on fetch state.
 
 [![git](https://cdnjs.cloudflare.com/ajax/libs/octicons/8.5.0/svg/mark-github.svg) GitHub](https://github.com/sashafirsov/slotted-element)
-| [demo TBD](https://cdn.xml4jquery.com/ajax/libs/embed-page/0.0.21/build/esm-unbundled/demo/index.html)
+| Demo: [fetch-element](https://unpkg.com/slotted-element@1.0.0/demo/index.html)
+, [JSON as table](https://unpkg.com/slotted-element@1.0.0/demo/render-from-json.html)
 | [tests project](https://github.com/sashafirsov/slotted-element-test)
+
 [![NPM version][npm-image]][npm-url]
 [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/slotted-element)
 

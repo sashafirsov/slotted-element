@@ -3,43 +3,60 @@
 <head>
     <meta charset="utf-8">
     <style>
-        body {
-            background: #fafafa;
-        }
-        demo-section{ display: block; border: blueviolet dashed 1px; border-radius: 1rem; padding: 1rem; }
+
     </style>
 </head>
 <body>
+
+<h1> slotted-element demo </h1>
+<a href=""><img src="https://cdnjs.cloudflare.com/ajax/libs/octicons/8.5.0/svg/mark-github.svg">git</a> |
+<a href="render-from-json.html"> fetch-element demo </a>
+<p>
+    <var>slotted-element</var> is web component implementing slots without shadow DOM.
+    It is based on <var>fetch-element</var> component to fetch data and render from retrieved JSON or HTML.
+</p>
+<html-demo-element>
+    <slotted-element src="embedded.html"></slotted-element>
+</html-demo-element>
+
+<html-demo-element title="Error case">
+    <slotted-element src="https://badUrl.heck">
+        <p slot="loading" hidden>Loading... ⏳ </p>
+        <p slot="error" hidden>Something went wrong. 😭 </p>
+    </slotted-element>
+</html-demo-element>
+
+<html-demo-element>
+    <slotted-element src="embedded.html">
+        <fieldset>
+            <legend> Content would be placed inside </legend>
+            <p slot="loading" hidden> Loading... ⏳ </p>
+            <p slot="error" hidden> What could be wrong? </p>
+            <p slot="loaded" hidden> Replaced with content of <b>embedded.html</b> </p>
+        </fieldset>
+    </slotted-element>
+</html-demo-element>
+
+<html-demo-element>
+    <slotted-element src="doc.json">
+        <fieldset>
+            <legend> <b>doc.json</b> as table </legend>
+            <p slot="loaded" hidden>  </p>
+        </fieldset>
+    </slotted-element>
+</html-demo-element>
+
+<html-demo-element>
+    <slotted-element src="dwarfs.json">
+        <fieldset>
+            <legend> array <b>dwarfs.json</b> as table </legend>
+            <p slot="loaded" hidden>  </p>
+        </fieldset>
+    </slotted-element>
+</html-demo-element>
+
+<script type="module" src="https://unpkg.com/html-demo-element@1.0.0/html-demo-element.js"></script>
 <script type="module" src="../slotted-element.js"></script>
 
-<demo-section>
-    <slotted-element src="embedded.html"></slotted-element>
-</demo-section>
-
-<demo-section>
-    <slotted-element src="https://badUrl.heck">
-        <p slot="loading">Loading... ⏳ </p>
-        <p slot="error">Something went wrong. 😭 </p>
-    </slotted-element>
-</demo-section>
-<script src="../node_modules/prismjs/prism.js"></script>
-<script type="module">
-    class DemoSection extends HTMLElement
-    {
-        // constructor(){ super(); }
-        connectedCallback()
-        {
-            const html = Prism.highlight( this.innerHTML, Prism.languages.html, 'html' );
-            const code = document.createElement( 'code' );
-            code.className='language-markup';
-            code.innerHTML = html+'<hr/>';
-            this.insertBefore( code, this.firstChild );
-        }
-    };
-    window.customElements.define( 'demo-section', DemoSection);
-    // https://www.webcomponents.org/search/highlight
-    // https://www.webcomponents.org/element/@kuscamara/code-sample
-// https://www.webcomponents.org/element/@vanillawc/wc-markdown
-</script>
 </body>
 </html>

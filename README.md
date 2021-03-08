@@ -6,8 +6,10 @@ are covering the typical UI tasks:
 3. control UI parts(slots) depending on fetch state.
 
 [![git](https://cdnjs.cloudflare.com/ajax/libs/octicons/8.5.0/svg/mark-github.svg) GitHub](https://github.com/sashafirsov/slotted-element)
-| [demo TBD](https://cdn.xml4jquery.com/ajax/libs/embed-page/0.0.21/build/esm-unbundled/demo/index.html)
+| Demo: [fetch-element](https://unpkg.com/slotted-element@1.0.0/demo/index.html)
+, [JSON as table](https://unpkg.com/slotted-element@1.0.0/demo/render-from-json.html)
 | [tests project](https://github.com/sashafirsov/slotted-element-test)
+
 [![NPM version][npm-image]][npm-url]
 [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/slotted-element)
 
@@ -21,16 +23,16 @@ the `slotted-element` is derived from `fetch-element`.
 2. Import into page/module either by ES6 import or simple SCRIPT tag
 3. In page body add  ```<fetch-element src="url/to/some.html"></fetch-element>``` or 
    
-    ```
+```
     <slotted-element src="url/to/some.json">
         <i slot="loading"> Loading... please wait. </i>
         <i slot="errror"> System error, please try again.  </i>
-        <frameset>
+        <fieldset>
             <legend>Object or array from JSON</legend>
             <div slot="done"></div>
-        </frameset>
+        </fieldset>
    </slotted-element>       
-    ```
+```
 
 # slotted-element
 Gives ability to use slots **without shadowDOM** and exposes API to work with slots programmatically by adding and 
@@ -74,12 +76,12 @@ fetch lifecycle overrides:
   conversion according to content type. 
   Returns data promise from `response.json()` or `response.text()`
 * `async onResult( result )` - called when data available. 
-  Invokes `data2Html( data, contentType, code )` callback and if it does not return anything 
+  Invokes `render( data, contentType, code )` callback and if it does not return anything 
   renders content either from JSON as table or text as HTML
   Sets `state="loaded"`
 
 Callbacks:
-* `data2Html( data, contentType, code, responseHeaders )` callback allows to apply data 
+* `render( data, contentType, code, responseHeaders )` callback allows to apply data 
   which could be used for inner DOM changing.
   Returns
     * html string to be populated as internal content or
@@ -96,6 +98,7 @@ all attributes reflected as component properties
 * `headers` - JS expression to be evaluated as string key-value object
 * `state` - '' or one of `loading`( fetch started ), `rendering`, `loaded`, `error`
 * `status` - http code response.status
+* `skiprender` - set to 'true' to omit response rendering. Used when binding to fetch-element via events.
 
 NOTE: for defining the payload in http request leave `src` undefined and call `fetch(url, options)` with needed parameters
  
@@ -106,8 +109,8 @@ visibility of internal dom subtree branches by `[state="xxx"] ...` selector.
 ## Credits
 The `fetch-element` is inspired by ideas of [iron-ajax](https://github.com/PolymerElements/iron-ajax) in regards of
 using properties for declarative programming. Unlike `iron-ajax` in `fetch-element` the primary use is not in data share 
-via binding (which requires framework like PolymerJS) but in providing the data to callbacks via inheritance or runtime 
-methods override for purpose of internal content render.
+via binding (which requires framework like PolymerJS) but in response rendering as table. 
+The data and content rendering customization is done by callbacks via inheritance or runtime methods override.
 
 # test and demo
 reside in separate repository https://github.com/sashafirsov/slotted-element-test to avoid unnecessary dependency in 

@@ -5,37 +5,32 @@
     <title>render from json - FetchElement</title>
 </head>
 <body>
-<fieldset>
-    <legend>Custom renderer</legend>
+<script type="module" src="https://unpkg.com/html-demo-element@1.0.0/html-demo-element.js"></script>
 
+<html-demo-element title="Custom renderer">
     <json-render-element src="doc.json"></json-render-element>
     <script type="module">
-        import FetchElement from '../src/FetchElement.js';
+        import FetchElement from '../fetch-element.js';
         window.customElements.define('json-render-element',
-        class JsonElement extends FetchElement
-        {
-            data2Html(json)
+            class JsonElement extends FetchElement
             {
-                return `<h1>${ json.name }</h1>
-                        <img src="${ json.portrait }" />
+                render(json)
+                {
+                    return `<h1>${ json.name }</h1>
+                        <img src="${ json.portrait }" alt="" />
                         `;
-            }
-        });
+                }
+            });
     </script>
-</fieldset>
+</html-demo-element>
 
-<fieldset>
-    <legend>Default as table</legend>
-
-    <script type="module" src="../fetch-element.js"></script>
+<html-demo-element title="Default as table">
     <fetch-element src="doc.json"></fetch-element>
-</fieldset>
+</html-demo-element>
 
-<fieldset>
-    <legend>Array as table</legend>
-
+<html-demo-element title="Array as table">
     <fetch-element src="dwarfs.json"></fetch-element>
-</fieldset>
+</html-demo-element>
 
 </body>
 </html>

@@ -1,6 +1,6 @@
 {
     "name": "slotted-element",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Web component fetch-element for ajax and render JSON as table and slotted-element without shadow DOM",
     "author":
     {   "name": "Sasha Firsov",
@@ -9,6 +9,11 @@
     },
     "homepage": "https://github.com/sashafirsov/slotted-element",
     "bugs": "https://github.com/sashafirsov/slotted-element/issues",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/sashafirsov/slotted-element.git"
+    },
+
     "keywords":
     [   "JS",
         "Vanilla",

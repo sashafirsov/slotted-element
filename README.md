@@ -6,8 +6,8 @@ are covering the typical UI tasks:
 3. control UI parts(slots) depending on fetch state.
 
 [![git](https://cdnjs.cloudflare.com/ajax/libs/octicons/8.5.0/svg/mark-github.svg) GitHub](https://github.com/sashafirsov/slotted-element)
-| Demo: [slotted-element](https://unpkg.com/slotted-element@1.0.0/demo/index.html)
-, [fetch-element JSON as table](https://unpkg.com/slotted-element@1.0.0/demo/render-from-json.html)
+| Demo: [slotted-element](https://unpkg.com/slotted-element@1.0.1/demo/index.html)
+, [fetch-element JSON as table](https://unpkg.com/slotted-element@1.0.1/demo/render-from-json.html)
 | [tests project](https://github.com/sashafirsov/slotted-element-test)
 
 [![NPM version][npm-image]][npm-url]
@@ -33,6 +33,7 @@ the `slotted-element` is derived from `fetch-element`.
         </fieldset>
    </slotted-element>       
 ```
+![screenshot][screenshot]
 
 # slotted-element
 Gives ability to use slots **without shadowDOM** and exposes API to work with slots programmatically by adding and 
@@ -120,3 +121,4 @@ source repo and npm.
 
 [npm-image]:      https://img.shields.io/npm/v/slotted-element.svg
 [npm-url]:        https://npmjs.org/package/slotted-element
+[screenshot]:   ./demo/Screenshot-fetch-element.png

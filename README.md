@@ -6,8 +6,8 @@ are covering the typical UI tasks:
 3. control UI parts(slots) depending on fetch state.
 
 [![git](https://cdnjs.cloudflare.com/ajax/libs/octicons/8.5.0/svg/mark-github.svg) GitHub](https://github.com/sashafirsov/slotted-element)
-| Demo: [fetch-element](https://unpkg.com/slotted-element@1.0.0/demo/index.html)
-, [JSON as table](https://unpkg.com/slotted-element@1.0.0/demo/render-from-json.html)
+| Demo: [slotted-element](https://unpkg.com/slotted-element@1.0.0/demo/index.html)
+, [fetch-element JSON as table](https://unpkg.com/slotted-element@1.0.0/demo/render-from-json.html)
 | [tests project](https://github.com/sashafirsov/slotted-element-test)
 
 [![NPM version][npm-image]][npm-url]
@@ -46,7 +46,8 @@ The slots concept is described in
 Originally it works in conjunction with shadowDOM when slots defined in content of element and referenced in 
 rendered shadowDOM by name. I.e. rendered DOM defines which slot and where will be displayed inside of web component.
 
-`slotted-element` gives ability to manipulate slots programmatically without engaging shadows dom.
+`slotted-element` gives ability to manipulate slots programmatically without engaging 
+[Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
 
 ## API
 * `slotsInit()` read slots from internal DOM to be cloned later by

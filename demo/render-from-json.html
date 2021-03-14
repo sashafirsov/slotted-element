@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>render from json - FetchElement</title>
+    <script type="module" src="https://unpkg.com/html-demo-element@1.0.1/html-demo-element.js"></script>
 </head>
 <body>
-<script type="module" src="https://unpkg.com/html-demo-element@1.0.1/html-demo-element.js"></script>
+<h1> slotted-element demo </h1>
+<a href="https://github.com/sashafirsov/slotted-element"><img src="https://cdnjs.cloudflare.com/ajax/libs/octicons/8.5.0/svg/mark-github.svg">git</a> |
+<a href="index.html"> slotted-element demo </a>
 
 <html-demo-element title="Custom renderer">
     <json-render-element src="doc.json"></json-render-element>
@@ -17,8 +20,8 @@
                 render(json)
                 {
                     return `<h1>${ json.name }</h1>
-                        <img src="${ json.portrait }" alt="" />
-                        `;
+                            <img src="${ json.portrait }" alt="" />
+                            `;
                 }
             });
     </script>

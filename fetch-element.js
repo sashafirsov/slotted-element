@@ -65,6 +65,12 @@ FetchElement extends HTMLElement
                 } ) );
     }
 
+    connectedCallback()
+    {
+        this.src && this.fetch( this.src );
+        this.initialized = !0;
+    }
+
     attributeChangedCallback( name, oldValue, newValue )
     {
         switch( name )
@@ -72,7 +78,7 @@ FetchElement extends HTMLElement
                 this[ name ] = eval( newValue );
                 break;
             case 'src':
-                this.fetch( newValue );
+                this.initialized && this.fetch( newValue );
                 break;
             default:
                 if( this[ name ] !== newValue )

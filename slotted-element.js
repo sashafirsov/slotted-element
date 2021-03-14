@@ -51,14 +51,13 @@ SlottedElement extends FetchElement
             }
         }
 
-        let templateDom = this;
         if( this.template )
         {   const nodeContent = n => n && (n.content || n);
-            templateDom = nodeContent(this.template.content) || nodeContent( document.getElementById( this.template ) );
-            if( !templateDom )
-                templateDom = createNode('template',"innerHTML", this.template).content;
+            let t = nodeContent(this.template.content) || nodeContent( document.getElementById( this.template ) );
+            if( !t )
+                t = createNode('template',"innerHTML", this.template).content;
             this.innerHTML='';
-            this.appendChild(templateDom = templateDom.cloneNode(true))
+            this.appendChild( t.cloneNode(true))
         }
         for( let s of this.querySelectorAll( 'slot' ) )
         {   let slot = this.slots[ s.name ];

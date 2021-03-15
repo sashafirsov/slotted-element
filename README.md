@@ -6,8 +6,8 @@ are covering the typical UI tasks:
 3. control UI parts(slots) depending on fetch state.
 
 [![git](https://cdnjs.cloudflare.com/ajax/libs/octicons/8.5.0/svg/mark-github.svg) GitHub](https://github.com/sashafirsov/slotted-element)
-| Demo: [slotted-element](https://unpkg.com/slotted-element@1.0.1/demo/index.html)
-, [fetch-element JSON as table](https://unpkg.com/slotted-element@1.0.1/demo/render-from-json.html)
+| Demo: [slotted-element](https://unpkg.com/slotted-element@1.0.2/demo/index.html)
+, [fetch-element JSON as table](https://unpkg.com/slotted-element@1.0.2/demo/render-from-json.html)
 | [tests project](https://github.com/sashafirsov/slotted-element-test)
 
 [![NPM version][npm-image]][npm-url]
@@ -23,7 +23,7 @@ the `slotted-element` is derived from `fetch-element`.
 2. Import into page/module either by ES6 import or simple SCRIPT tag
 3. In page body add  ```<fetch-element src="url/to/some.html"></fetch-element>``` or 
    
-```
+```html
     <slotted-element src="url/to/some.json">
         <i slot="loading"> Loading... please wait. </i>
         <i slot="errror"> System error, please try again.  </i>
@@ -36,19 +36,33 @@ the `slotted-element` is derived from `fetch-element`.
 ![screenshot][screenshot]
 
 # slotted-element
-Gives ability to use slots **without shadowDOM** and exposes API to work with slots programmatically by adding and 
-removing slots by slot name.
+Gives ability to use slots 
+**without [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM)** 
+and exposes API to work with slots programmatically by adding and removing slots by slot name.
 
-Coupled with `fetch-element` it provides UI management for each stage of data fetch and transforming to UI.  
+Coupled with `fetch-element`, it provides UI management for each stage of data fetch and UI transformation.  
 
 The slots concept is described in 
 [using slots in MDN](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_templates_and_slots#adding_flexibility_with_slots)
 
-Originally it works in conjunction with shadowDOM when slots defined in content of element and referenced in 
-rendered shadowDOM by name. I.e. rendered DOM defines which slot and where will be displayed inside of web component.
+Originally slots are designed to work in conjunction with template and shadowDOM when slot values are defined in content of 
+element and referenced in rendered shadowDOM by name. I.e. template DOM defines which slot and where will be displayed 
+inside of web component.
 
-`slotted-element` gives ability to manipulate slots programmatically without engaging 
-[Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
+## Template vs inline HTML
+If the `template` is defined as getter method, property, or attribute then
+    
+    slotted-element simulates the usual ShadowDOM slots handling by template cloning into local DOM and 
+    placing the slots from inner DOM into template clone. Unlike in ShadowDOM this is less efficient as template DOM 
+    is not reused and inner DOM has to be re-build.
+
+Without `template` property defined the inner content is uses as template: 
+    
+inner DOM is shown except of elements with slot attribute. It is up to application code to trigger the visibility 
+of particular slots. `embed-page` activates slots for fetch-element handling when `src` attribute is set.
+
+Using inline HTML is handy in CMS or publishing systems when content is authored by editors rather than developers. 
+It is more performant than separate template as there is no content cloning involved.   
 
 ## API
 * `slotsInit()` read slots from internal DOM to be cloned later by

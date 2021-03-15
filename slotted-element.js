@@ -1,17 +1,21 @@
 import FetchElement  from './fetch-element.js';
+function createNode( tag, prop, val ){ const el = document.createElement(tag); el[prop]=val; return el; }
+
     export class
 SlottedElement extends FetchElement
 {
-    static get template()
-    {   return `
-<div slot="loading">loading...</div>
-<div slot="error">System error</div>
-<div slot="loaded"></div>
-`   }
+    static get observedAttributes(){ return  [ 'template', ...FetchElement.observedAttributes ]; }
 
-    constructor()
-    {   super();
-        this.slotsInit();
+    connectedCallback()
+    {   this.slotsInit();
+        super.connectedCallback();
+    }
+    attributeChangedCallback( name, oldValue, newValue )
+    {
+        if( name !== 'template')
+            return super.attributeChangedCallback( name, oldValue, newValue );
+        this.template = newValue;
+        this.initialized && this.slotsInit();
     }
 
     fetch( url, options )
@@ -36,9 +40,31 @@ SlottedElement extends FetchElement
 
     slotsInit()
     {
-        this.slots = {};
-        for( let slot of this.querySelectorAll( '[slot]' ) )
-            this.slots[ slot.slot ] = slot;
+        if( !this.slots )
+        {
+            this.slots = {};
+            for( let node of this.querySelectorAll( '[slot]' ) )
+            {
+                this.slots[ node.slot ] = node;
+                node.parentNode.replaceChild( createNode('slot', 'name', node.slot ), node );
+            }
+        }
+
+        if( this.template )
+        {   const nodeContent = n => n && (n.content || n);
+            let t = nodeContent(this.template.content) || nodeContent( document.getElementById( this.template ) );
+            if( !t )
+                t = createNode('template',"innerHTML", this.template).content;
+            this.innerHTML='';
+            this.appendChild( t.cloneNode(true))
+            for( let s of this.querySelectorAll( 'slot' ) )
+            {   let slot = this.slots[ s.name ];
+                if( slot )
+                {   s.hidden = !0;
+                    s.parentNode.insertBefore( slot.cloneNode( true ), s );
+                }
+            }
+        }
     }
 
     slotOnly( name )
@@ -71,10 +97,14 @@ SlottedElement extends FetchElement
     slotAdd( node ) // name or node created by slotClone(name)
     {
         const slot = node.slot ? node: this.slotClone( node )
-        ,      ref = this.slots[ node.slot || node ];
-        return ref && ref.parentElement.insertBefore( slot, ref );
+        ,      ref = this.querySelectorAll(`slot[name="${node.slot || node}"]`);
+        let added;
+        for( let r of ref)
+            added = r.parentElement.insertBefore( slot, r );
+        return added;
     }
 
 }
+export default SlottedElement;
 
 window.customElements.define('slotted-element', SlottedElement);

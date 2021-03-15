@@ -14,11 +14,10 @@ SlottedElement extends FetchElement
     {
         if( name !== 'template')
             return super.attributeChangedCallback( name, oldValue, newValue );
-        if( this.template !== newValue )
-        {
-            this[ name ] = newValue;
-        }
+        this.template = newValue;
+        this.initialized && this.slotsInit();
     }
+
     fetch( url, options )
     {
         this.slotOnly('loading')
@@ -41,7 +40,7 @@ SlottedElement extends FetchElement
 
     slotsInit()
     {
-        if( !this.slots || this.children.length )
+        if( !this.slots )
         {
             this.slots = {};
             for( let node of this.querySelectorAll( '[slot]' ) )
@@ -58,12 +57,12 @@ SlottedElement extends FetchElement
                 t = createNode('template',"innerHTML", this.template).content;
             this.innerHTML='';
             this.appendChild( t.cloneNode(true))
-        }
-        for( let s of this.querySelectorAll( 'slot' ) )
-        {   let slot = this.slots[ s.name ];
-            if( slot )
-            {   s.hidden = !0;
-                s.parentNode.insertBefore( slot.cloneNode( true ), s );
+            for( let s of this.querySelectorAll( 'slot' ) )
+            {   let slot = this.slots[ s.name ];
+                if( slot )
+                {   s.hidden = !0;
+                    s.parentNode.insertBefore( slot.cloneNode( true ), s );
+                }
             }
         }
     }

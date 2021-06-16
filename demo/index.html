@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <style>
-
+        @import "demo.css";
     </style>
 </head>
 <body>
@@ -12,22 +12,24 @@
 <a href="https://github.com/sashafirsov/slotted-element"><img src="https://cdnjs.cloudflare.com/ajax/libs/octicons/8.5.0/svg/mark-github.svg">git</a> |
 <a href="render-from-json.html"> fetch-element demo </a> |
 <a href="template-demo.html"> template demo </a>
+
 <p>
     <var>slotted-element</var> is web component implementing slots without shadow DOM.
     It is based on <var>fetch-element</var> component to fetch data and render from retrieved JSON or HTML.
 </p>
-<html-demo-element>
+<main>
+<html-demo-element legend="From url">
     <slotted-element src="embedded.html"></slotted-element>
 </html-demo-element>
 
-<html-demo-element title="Error case">
+<html-demo-element legend="Error case">
     <slotted-element src="https://badUrl.heck">
         <p slot="loading" hidden>Loading... ⏳ </p>
         <p slot="error" hidden>Something went wrong. 😭 </p>
     </slotted-element>
 </html-demo-element>
 
-<html-demo-element title="Content would be placed inside of 'loaded' slot ">
+<html-demo-element legend="Content would be placed inside of 'loaded' slot ">
     <slotted-element src="embedded.html">
         <fieldset>
             <legend> Slots located in wrapper </legend>
@@ -38,7 +40,7 @@
     </slotted-element>
 </html-demo-element>
 
-<html-demo-element>
+<html-demo-element legend="From key:value JSON">
     <slotted-element src="doc.json">
         <fieldset>
             <legend> <b>doc.json</b> as table </legend>
@@ -47,11 +49,11 @@
     </slotted-element>
 </html-demo-element>
 
-<html-demo-element title="array dwarfs.json as table">
+<html-demo-element legend="array dwarfs.json as table">
     <slotted-element src="dwarfs.json"></slotted-element>
 </html-demo-element>
-
-<script type="module" src="https://unpkg.com/html-demo-element@1.0.1/html-demo-element.js"></script>
+</main>
+<script type="module" src="https://unpkg.com/html-demo-element@1.0.5/html-demo-element.js"></script>
 <script type="module" src="../slotted-element.js"></script>
 
 </body>

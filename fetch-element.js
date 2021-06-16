@@ -18,6 +18,10 @@ FetchElement extends HTMLElement
 {
     static get observedAttributes(){ return  [ 'src', 'method', 'headers', 'state', 'status', 'error', 'skiprender' ]; }
 
+    static get mime2mod(){ return   {   'application/json':'./render/json.js'
+                                    ,   'text/html': FetchElement.prototype.renderHtml
+                                    }}
+
     get headers(){ return {} }
 
     abort(){}
@@ -105,26 +109,14 @@ FetchElement extends HTMLElement
         try
         {   if( this.hasAttribute('skiprender') )
                 return;
+
+            let mod = this.constructor.mime2mod[ this.contentType.split(';')[0] ];
+            if( typeof mod === 'string' )
+                mod = (await import(mod)).default;
+
             this.state = 'rendering';
 
-            if( this.contentType.includes( 'xml' ) )
-            {
-                const xml = ( new window.DOMParser() ).parseFromString( result, "text/xml" );
-                this.render( xml, this.contentType, this.status, this.responseHeaders );
-                // todo xslt from xml
-            }else if( this.contentType.includes( 'html' ) )
-            {
-                this.setContent(result);
-                await wait4DomUpdated();
-                this.render( result, this.contentType, this.status, this.responseHeaders );
-                await wait4DomUpdated();
-            }else if( this.contentType.includes( 'json' ) )
-            {
-                await wait4DomUpdated();
-                const html = this.render( result, this.contentType, this.status, this.responseHeaders );
-                this.setContent( html || this.json2table( result, [] ) );
-                await wait4DomUpdated();
-            }
+            return ( mod || this.render ).call( this, result, this.contentType, this.status, this.responseHeaders  );
         }finally
         {
             this.state = 'loaded';
@@ -132,6 +124,13 @@ FetchElement extends HTMLElement
     }
 
     render( data, contentType, httpCode, responseHeaders ){}
+    async renderHtml( data, contentType, httpCode, responseHeaders )
+    {
+        this.setContent( data );
+        await wait4DomUpdated();
+        this.render( ...arguments );
+        await wait4DomUpdated();
+    }
 
     onError( error )
     {

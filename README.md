@@ -2,12 +2,13 @@
 
 are covering the typical UI tasks:
 1. fetch data via [fetch() api](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
-2. populate data into UI via custom render callback or provided content-type sensitive renderers: JSON to table or html.
+2. populate data into UI via custom render callback or provided content-type sensitive renderers: JSON/XML data to table,
+   inline for HTML/SVG (aka html import); exposes customize-able transformation pipeline.
 3. control UI parts(slots) depending on fetch state.
 
 [![git](https://cdnjs.cloudflare.com/ajax/libs/octicons/8.5.0/svg/mark-github.svg) GitHub](https://github.com/sashafirsov/slotted-element)
-| Demo: [slotted-element](https://unpkg.com/slotted-element@1.0.2/demo/index.html)
-, [fetch-element JSON as table](https://unpkg.com/slotted-element@1.0.2/demo/render-from-json.html)
+| Demo: [slotted-element](https://unpkg.com/slotted-element@1.0.3/demo/index.html)
+, [fetch-element JSON as table](https://unpkg.com/slotted-element@1.0.3/demo/render-from-json.html)
 | [tests project](https://github.com/sashafirsov/slotted-element-test)
 
 [![NPM version][npm-image]][npm-url]
@@ -17,6 +18,9 @@ As slots **without shadow DOM** primarily would be used for displaying remotely 
 the `slotted-element` is derived from `fetch-element`.
 
 # Use
+## install
+    npm i -P slotted-element
+## or from CDN
 1. if JS served by CDN as in demo, skip this step. Otherwise add `slotted-element` dependency into project via package manager 
    like npm, yarn, bower, bit.dev. 
    Or simply clone `fetch-element.js` and `slotted-element.js` into project tree
@@ -80,8 +84,11 @@ Overrides for `fetched-element` to support following fetch() lifecycle slots `lo
 
 1. exposes interruptible [fetch() api](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) as web component. 
 2. Input parameters and result are exposed via element attributes
-3. Provides default rendering for HTML and JSON as table
+3. Provides default rendering for JSON and XML as table, inline SVG and HTML
 4. Exposes overriding methods for `fetch()` and render life cycle  
+
+The rendering code is loading on demand according to `content-type` 
+reducing initial JS size to 4.5kb uncompressed / 1.7 gzipped.
 
 ## API
 * `get headers()` override to set headers programmatically is no matching attribute is given
@@ -99,9 +106,9 @@ fetch lifecycle overrides:
 Callbacks:
 * `render( data, contentType, code, responseHeaders )` callback allows to apply data 
   which could be used for inner DOM changing.
-  Returns
-    * html string to be populated as internal content or
-    * true to state that internally provided rendering should be omitted.
+  Returns either
+    * `html string` to be populated as internal content or
+    * `true` to state that internally provided rendering should be omitted.
 * `onError( error )`
 * `json2table( data )` - default render JSON object or array to table. Override for custom render. Return html string.
 * `getKeys( obj )` - override to limit or define the order of keys on json object to be rendered in table.
@@ -132,6 +139,8 @@ The data and content rendering customization is done by callbacks via inheritanc
 reside in separate repository https://github.com/sashafirsov/slotted-element-test to avoid unnecessary dependency in 
 source repo and npm.
 
+# dependencies
+None, just a browser with Web Components support.
 
 [npm-image]:      https://img.shields.io/npm/v/slotted-element.svg
 [npm-url]:        https://npmjs.org/package/slotted-element

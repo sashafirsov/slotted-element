@@ -1,7 +1,7 @@
 {
     "name": "slotted-element",
-    "version": "1.0.2",
-    "description": "Web component fetch-element for ajax and render JSON as table and slotted-element without shadow DOM",
+    "version": "1.0.3",
+    "description": "Web component fetch-element for ajax and render JSON/XML data as table and slotted-element without shadow DOM",
     "author":
     {   "name": "Sasha Firsov",
         "email": "suns@simulationworks.com",

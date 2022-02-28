@@ -1,4 +1,6 @@
 import FetchElement  from './fetch-element.js';
+import { CssChain as $ } from 'css-chain';
+
 function createNode( tag, prop, val ){ const el = document.createElement(tag); el[prop]=val; return el; }
 
     export class
@@ -7,7 +9,8 @@ SlottedElement extends FetchElement
     static get observedAttributes(){ return  [ 'template', ...FetchElement.observedAttributes ]; }
 
     connectedCallback()
-    {   this.slotsInit();
+    {   this._$ = $(this);
+        this.slotsInit();
         super.connectedCallback();
     }
     attributeChangedCallback( name, oldValue, newValue )
@@ -17,8 +20,7 @@ SlottedElement extends FetchElement
         this.template = newValue;
         this.initialized && this.slotsInit();
     }
-    $( css ){ return this.querySelector(css); }
-    $$( css ){ return this.querySelectorAll(css); }
+    $( css ){ return css? this._$.$(css): this._$; }
 
     fetch( url, options )
     {
@@ -45,7 +47,7 @@ SlottedElement extends FetchElement
         if( !this.slots )
         {
             this.slots = {};
-            for( let node of this.$$( '[slot]' ) )
+            for( let node of this.$( '[slot]' ) )
             {
                 this.slots[ node.slot ] = node;
                 node.parentNode.replaceChild( createNode('slot', 'name', node.slot ), node );
@@ -59,7 +61,7 @@ SlottedElement extends FetchElement
                 t = createNode('template',"innerHTML", this.template).content;
             this.innerHTML='';
             this.appendChild( t.cloneNode(true))
-            for( let s of this.$$( 'slot' ) )
+            for( let s of this.$().slots() )
             {   let slot = this.slots[ s.name ];
                 if( slot )
                 {   s.hidden = !0;
@@ -71,7 +73,7 @@ SlottedElement extends FetchElement
 
     slotOnly( name )
     {
-        for( let el of this.$$( '[slot-cloned]' ) )
+        for( let el of this.$( '[slot-cloned]' ) )
             if( el.slot !== name )
                 el.remove();
 
@@ -81,7 +83,7 @@ SlottedElement extends FetchElement
 
     slotsClear()
     {
-        for( let slot of this.$$( '[slot-cloned]' ) )
+        for( let slot of this.$( '[slot-cloned]' ) )
             slot.remove();
     }
 
@@ -99,7 +101,7 @@ SlottedElement extends FetchElement
     slotAdd( node ) // name or node created by slotClone(name)
     {
         const slot = node.slot ? node: this.slotClone( node )
-        ,      ref = this.$$(`slot[name="${node.slot || node}"]`);
+        ,      ref = this.$(`slot[name="${node.slot || node}"]`);
         let added;
         for( let r of ref)
             added = r.parentElement.insertBefore( slot, r );

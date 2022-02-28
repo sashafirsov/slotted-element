@@ -17,6 +17,8 @@ SlottedElement extends FetchElement
         this.template = newValue;
         this.initialized && this.slotsInit();
     }
+    $( css ){ return this.querySelector(css); }
+    $$( css ){ return this.querySelectorAll(css); }
 
     fetch( url, options )
     {
@@ -43,7 +45,7 @@ SlottedElement extends FetchElement
         if( !this.slots )
         {
             this.slots = {};
-            for( let node of this.querySelectorAll( '[slot]' ) )
+            for( let node of this.$$( '[slot]' ) )
             {
                 this.slots[ node.slot ] = node;
                 node.parentNode.replaceChild( createNode('slot', 'name', node.slot ), node );
@@ -57,7 +59,7 @@ SlottedElement extends FetchElement
                 t = createNode('template',"innerHTML", this.template).content;
             this.innerHTML='';
             this.appendChild( t.cloneNode(true))
-            for( let s of this.querySelectorAll( 'slot' ) )
+            for( let s of this.$$( 'slot' ) )
             {   let slot = this.slots[ s.name ];
                 if( slot )
                 {   s.hidden = !0;
@@ -69,17 +71,17 @@ SlottedElement extends FetchElement
 
     slotOnly( name )
     {
-        for( let el of this.querySelectorAll( '[slot-cloned]' ) )
+        for( let el of this.$$( '[slot-cloned]' ) )
             if( el.slot !== name )
                 el.remove();
 
-        if( !this.querySelector( `[slot="${name}"][slot-cloned]` ) )
+        if( !this.$( `[slot="${name}"][slot-cloned]` ) )
             this.slotAdd(name);
     }
 
     slotsClear()
     {
-        for( let slot of this.querySelectorAll( '[slot-cloned]' ) )
+        for( let slot of this.$$( '[slot-cloned]' ) )
             slot.remove();
     }
 
@@ -97,7 +99,7 @@ SlottedElement extends FetchElement
     slotAdd( node ) // name or node created by slotClone(name)
     {
         const slot = node.slot ? node: this.slotClone( node )
-        ,      ref = this.querySelectorAll(`slot[name="${node.slot || node}"]`);
+        ,      ref = this.$$(`slot[name="${node.slot || node}"]`);
         let added;
         for( let r of ref)
             added = r.parentElement.insertBefore( slot, r );

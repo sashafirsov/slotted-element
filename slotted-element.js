@@ -31,8 +31,7 @@ SlottedElement extends FetchElement
     setContent( html )
     {
         if( this.slots.loaded )
-        {
-            const slot = this.slotClone('loaded')
+        {   const slot = this.slotClone('loaded')
             slot.innerHTML = html;
             this.slotAdd(slot);
         }else
@@ -45,46 +44,33 @@ SlottedElement extends FetchElement
     slotsInit()
     {
         if( !this.slots )
-        {
-            this.slots = {};
-            for( let node of this.$( '[slot]' ) )
-            {
-                this.slots[ node.slot ] = node;
-                node.parentNode.replaceChild( createNode('slot', 'name', node.slot ), node );
-            }
+        {   this.slots = {};
+            this.$( '[slot]' )
+                .map( node => this.slots[ node.slot ] = node );
         }
-
+        const $i = this._$;
         if( this.template )
-        {   const nodeContent = n => n && (n.content || n);
-            let t = nodeContent(this.template.content) || nodeContent( document.getElementById( this.template ) );
-            if( !t )
-                t = createNode('template',"innerHTML", this.template).content;
-            this.innerHTML='';
-            this.appendChild( t.cloneNode(true))
-            for( let s of this.$().slots() )
-            {   let slot = this.slots[ s.name ];
-                if( slot )
-                {   s.hidden = !0;
-                    s.parentNode.insertBefore( slot.cloneNode( true ), s );
-                }
-            }
-        }
+        {   const a = $i.attr('template');
+            if( a )
+                return $i.template( $('#'+a ) );
+
+            $i.template( createNode( 'template', 'innerHTML', this.template ) );
+        } else
+            $i.template();
     }
 
     slotOnly( name )
-    {
-        for( let el of this.$( '[slot-cloned]' ) )
-            if( el.slot !== name )
-                el.remove();
+    {   this.$( '[slot-cloned]' )
+            .filter( el => el.slot !== name )
+            .remove();
 
         if( !this.$( `[slot="${name}"][slot-cloned]` ) )
             this.slotAdd(name);
     }
 
     slotsClear()
-    {
-        for( let slot of this.$( '[slot-cloned]' ) )
-            slot.remove();
+    {   this.$( '[slot-cloned]' )
+            .remove();
     }
 
     slotClone( name )// create slot to be modified before by slotAdd(node)

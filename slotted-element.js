@@ -1,4 +1,6 @@
 import FetchElement  from './fetch-element.js';
+import { CssChain as $ } from 'css-chain';
+
 function createNode( tag, prop, val ){ const el = document.createElement(tag); el[prop]=val; return el; }
 
     export class
@@ -7,7 +9,8 @@ SlottedElement extends FetchElement
     static get observedAttributes(){ return  [ 'template', ...FetchElement.observedAttributes ]; }
 
     connectedCallback()
-    {   this.slotsInit();
+    {   this._$ = $(this);
+        this.slotsInit();
         super.connectedCallback();
     }
     attributeChangedCallback( name, oldValue, newValue )
@@ -17,6 +20,7 @@ SlottedElement extends FetchElement
         this.template = newValue;
         this.initialized && this.slotsInit();
     }
+    $( css ){ return css? this._$.$(css): this._$; }
 
     fetch( url, options )
     {
@@ -27,8 +31,7 @@ SlottedElement extends FetchElement
     setContent( html )
     {
         if( this.slots.loaded )
-        {
-            const slot = this.slotClone('loaded')
+        {   const slot = this.slotClone('loaded')
             slot.innerHTML = html;
             this.slotAdd(slot);
         }else
@@ -41,46 +44,29 @@ SlottedElement extends FetchElement
     slotsInit()
     {
         if( !this.slots )
-        {
-            this.slots = {};
-            for( let node of this.querySelectorAll( '[slot]' ) )
-            {
-                this.slots[ node.slot ] = node;
-                node.parentNode.replaceChild( createNode('slot', 'name', node.slot ), node );
-            }
+        {   this.slots = {};
+            this.$( '[slot]' )
+                .map( node => this.slots[ node.slot ] = node );
         }
+        const $i = this._$;
+        const a = $i.attr('template');
 
-        if( this.template )
-        {   const nodeContent = n => n && (n.content || n);
-            let t = nodeContent(this.template.content) || nodeContent( document.getElementById( this.template ) );
-            if( !t )
-                t = createNode('template',"innerHTML", this.template).content;
-            this.innerHTML='';
-            this.appendChild( t.cloneNode(true))
-            for( let s of this.querySelectorAll( 'slot' ) )
-            {   let slot = this.slots[ s.name ];
-                if( slot )
-                {   s.hidden = !0;
-                    s.parentNode.insertBefore( slot.cloneNode( true ), s );
-                }
-            }
-        }
+        $i.template( a ? $('#'+a )
+                       : this.template && createNode( 'template', 'innerHTML', this.template ) );
     }
 
     slotOnly( name )
-    {
-        for( let el of this.querySelectorAll( '[slot-cloned]' ) )
-            if( el.slot !== name )
-                el.remove();
+    {   this.$( '[slot-cloned]' )
+            .filter( el => el.slot !== name )
+            .remove();
 
-        if( !this.querySelector( `[slot="${name}"][slot-cloned]` ) )
+        if( !this.$( `[slot="${name}"][slot-cloned]` ) )
             this.slotAdd(name);
     }
 
     slotsClear()
-    {
-        for( let slot of this.querySelectorAll( '[slot-cloned]' ) )
-            slot.remove();
+    {   this.$( '[slot-cloned]' )
+            .remove();
     }
 
     slotClone( name )// create slot to be modified before by slotAdd(node)
@@ -97,7 +83,7 @@ SlottedElement extends FetchElement
     slotAdd( node ) // name or node created by slotClone(name)
     {
         const slot = node.slot ? node: this.slotClone( node )
-        ,      ref = this.querySelectorAll(`slot[name="${node.slot || node}"]`);
+        ,      ref = this.$(`slot[name="${node.slot || node}"]`);
         let added;
         for( let r of ref)
             added = r.parentElement.insertBefore( slot, r );

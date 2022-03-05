@@ -49,14 +49,10 @@ SlottedElement extends FetchElement
                 .map( node => this.slots[ node.slot ] = node );
         }
         const $i = this._$;
-        if( this.template )
-        {   const a = $i.attr('template');
-            if( a )
-                return $i.template( $('#'+a ) );
+        const a = $i.attr('template');
 
-            $i.template( createNode( 'template', 'innerHTML', this.template ) );
-        } else
-            $i.template();
+        $i.template( a ? $('#'+a )
+                       : this.template && createNode( 'template', 'innerHTML', this.template ) );
     }
 
     slotOnly( name )

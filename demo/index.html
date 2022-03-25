@@ -6,6 +6,15 @@
         @import "demo.css";
         svg{ height: 16rem; }
     </style>
+    <script type="importmap">
+        {
+            "imports": {
+                "css-chain": "../node_modules/css-chain/CssChain.js"
+            }
+        }
+    </script>
+    <script type="module" src="https://unpkg.com/html-demo-element@1.0.7/html-demo-element.js"></script>
+    <script type="module" src="../slotted-element.js"></script>
 </head>
 <body>
 
@@ -58,8 +67,6 @@
     <slotted-element src="confused.svg"></slotted-element>
 </html-demo-element>
 </main>
-<script type="module" src="https://unpkg.com/html-demo-element@1.0.7/html-demo-element.js"></script>
-<script type="module" src="../slotted-element.js"></script>
 
 </body>
 </html>

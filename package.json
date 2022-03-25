@@ -30,10 +30,11 @@
         "**/*"
     ],
     "scripts": {
+        "start": "npx @web/dev-server",
         "test": "echo 'test is implemented in https://github.com/sashafirsov/slotted-element-test' && exit 0"
     },
     "dependencies": {
-        "css-chain": "^1.1.0"
+        "css-chain": "^1.1.2"
     },
     "funding": {
         "type": "patreon",

@@ -1,0 +1,21 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+    <script type="importmap">{"imports": {"css-chain": "../node_modules/css-chain/CssChain.js"}}</script>
+    <script type="module" src="../slotted-element.js"></script>
+</head><body>
+
+<slotted-element id="demo3a">
+    <p slot="slot0">slot0 is overridden in body!</p>
+</slotted-element>
+<script type="module">
+    window.addEventListener('load', () =>
+    {
+        demo3a.template = `<h6>template set by external JS on instance 🥳</h6>
+                                <slot name="slot0">slot0 in template would be overridden.  </slot>
+                                <slot name="slot1">slot1 is defined in template.  </slot>
+                                `;
+        demo3a.slotsInit();
+    });
+</script>
+
+</body></html>

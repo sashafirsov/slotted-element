@@ -26,7 +26,9 @@
 </html-demo-element>
 
 <html-demo-element legend="2. Template defined by ID">
+
     <template id="template-with-slots">
+        <!-- template id="template-with-slots"  -->
         <h6>template HTML with slots 🥳</h6>
         <slot name="slot0" hidden>
             Slots are hidden in template when "hidden" attribute is set.
@@ -34,58 +36,23 @@
         </slot>
         <slot name="slot1"> slot1 is visible, hide by setting "hidden" attribute </slot>
         <slot name="slot3"></slot>
+        <!-- <slotted-element template="template-with-slots"></slotted-element> -->
     </template>
     <slotted-element template="template-with-slots"></slotted-element>
 </html-demo-element>
 
 
-<html-demo-element legend="2a. Template defined by ID, slots redefined in body.">
-    <template id="template-with-slots2">
-        <h6>template by ID, inline HTML redefines slots 🥳</h6>
-        <slot name="slot0">slot0 in template would be overridden.  </slot>
-        <slot name="slot1">slot1 is defined in template.  </slot>
-    </template>
-    <slotted-element template="template-with-slots2">
-        <p slot="slot0">slot0 is overridden in body!</p>
-    </slotted-element>
+<html-demo-element legend="2a. Template defined by ID, slots redefined in body." src="template-with-slots2.html">
 </html-demo-element>
+<iframe src="template-with-slots2.html"></iframe>
 
-<html-demo-element legend="3. template defined as property getter">
-    <demo3-element>
-        <p slot="slot0">slot0 is overridden in body!</p>
-    </demo3-element>
-    <script type="module">
-        import SlottedElement from '../slotted-element.js';
-        window.customElements.define('demo3-element',
-            class Demo3Element extends SlottedElement
-            {
-                get template()
-                {
-                    return `<h6>${this.nodeName}, inline HTML redefines slots 🥳</h6>
-                            <slot name="slot0">slot0 in template would be overridden.  </slot>
-                            <slot name="slot1">slot1 is defined in template.  </slot>
-                            `;
-                }
-            });
-    </script>
-</html-demo-element>
+<html-demo-element legend="3. template defined as property getter" src="demo3-element.html"></html-demo-element>
+<iframe src="demo3-element.html"></iframe>
 
 
-<html-demo-element legend="3a. template defined as instance set property">
-    <slotted-element id="demo3a">
-        <p slot="slot0">slot0 is overridden in body!</p>
-    </slotted-element>
-    <script type="module">
-        window.addEventListener('load', () =>
-        {
-            demo3a.template = `<h6>template set by external JS on instance 🥳</h6>
-                                <slot name="slot0">slot0 in template would be overridden.  </slot>
-                                <slot name="slot1">slot1 is defined in template.  </slot>
-                                `;
-            demo3a.slotsInit();
-        });
-    </script>
-</html-demo-element>
+<html-demo-element legend="3a. template defined as instance set property" src="demo3-element-a.html"></html-demo-element>
+<iframe src="demo3-element-a.html"></iframe>
+
 </main>
 </body>
 </html>

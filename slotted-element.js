@@ -45,23 +45,27 @@ SlottedElement extends FetchElement
     {
         if( !this.slots )
         {   this.slots = {};
-            this.$( '[slot]' )
-                .map( node => this.slots[ node.slot ] = node );
+            this.$( '[slot]' ).map( node =>this.slots[ node.slot ] = node )
         }
-        const $i = this._$;
-        const a = $i.attr('template');
-
-        $i.template( a ? $('#'+a )
-                       : this.template && createNode( 'template', 'innerHTML', this.template ) );
+        const $i = this._$
+        ,   a = $i.attr('template');
+        if( a ) $i.template( $('#'+a ) )
+        else if( this.template )
+            $i.template(  createNode( 'template', 'innerHTML', this.template ) )
+        else
+            $i.template();
+        this.src || this.slotOnly('loaded');
     }
 
     slotOnly( name )
     {   this.$( '[slot-cloned]' )
             .filter( el => el.slot !== name )
             .remove();
-
-        if( !this.$( `[slot="${name}"][slot-cloned]` ) )
+        const $s = this.$().slots(name);
+        $s.length && this.$().slots().attr('hidden','hidden');
+        if( !this.$( `[slot="${name}"][slot-cloned]` ).length )
             this.slotAdd(name);
+        this.$().slots(name).removeAttribute('hidden');
     }
 
     slotsClear()
@@ -69,7 +73,7 @@ SlottedElement extends FetchElement
             .remove();
     }
 
-    slotClone( name )// create slot to be modified before by slotAdd(node)
+    slotClone( name ) // create slot to be modified before by slotAdd(node)
     {
         const slot = this.slots[ name ]
         if( !slot )
@@ -94,3 +98,5 @@ SlottedElement extends FetchElement
 export default SlottedElement;
 
 window.customElements.define('slotted-element', SlottedElement);
+
+export { $ as CssChain };

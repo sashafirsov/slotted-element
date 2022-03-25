@@ -20,22 +20,29 @@ the `slotted-element` is derived from `fetch-element`.
 # Use
 ## install
     npm i -P slotted-element
-## or from CDN
-1. if JS served by CDN as in demo, skip this step. Otherwise add `slotted-element` dependency into project via package manager 
-   like npm, yarn, bower, bit.dev. 
+## or use binary bundle from CDN
+```js
+    <script type="module" scr="https://unpkg.com/slotted-element-test@1.1/dist/bundle/slotted-element.js"></script>
+```
+The size of binary distribution bundle along with its dependency [CssChain](https://github.com/sashafirsov/css-chain) 
+is 11Kb. Bundle has export of `SlottedElement` along with `CssChain`.
+
+1. if JS served by CDN as in demo, skip this step. Otherwise, add `slotted-element` dependency into project via 
+   package manager like npm, yarn, bower, bit.dev. 
    Or simply clone `fetch-element.js` and `slotted-element.js` into project tree
 2. Import into page/module either by ES6 import or simple SCRIPT tag
-3. In page body add  ```<fetch-element src="url/to/some.html"></fetch-element>``` or 
-   
-```html
-    <slotted-element src="url/to/some.json">
-        <i slot="loading"> Loading... please wait. </i>
-        <i slot="errror"> System error, please try again.  </i>
-        <fieldset>
-            <legend>Object or array from JSON</legend>
-            <div slot="done"></div>
-        </fieldset>
-   </slotted-element>       
+3. In page body add  
+```html 
+<fetch-element src="url/to/some.html"></fetch-element>
+or  
+<slotted-element src="url/to/some.json">
+    <i slot="loading"> Loading... please wait. </i>
+    <i slot="errror"> System error, please try again.  </i>
+    <fieldset>
+        <legend>Object or array from JSON</legend>
+        <div slot="done"></div>
+    </fieldset>
+</slotted-element>       
 ```
 ![screenshot][screenshot]
 

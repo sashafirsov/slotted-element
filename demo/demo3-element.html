@@ -1,0 +1,24 @@
+<!doctype html>
+<html><head>
+    <script type="importmap">{"imports": {"css-chain": "../node_modules/css-chain/CssChain.js"}}</script>
+</head><body>
+
+<demo3-element>
+    <p slot="slot0">slot0 is overridden in body!</p>
+</demo3-element>
+<script type="module">
+    import SlottedElement from '../slotted-element.js';
+    window.customElements.define('demo3-element',
+        class Demo3Element extends SlottedElement
+        {
+            get template()
+            {
+                return `<h6>${this.nodeName}, inline HTML redefines slots 🥳</h6>
+                            <slot name="slot0">slot0 in template would be overridden.  </slot>
+                            <slot name="slot1">slot1 is defined in template.  </slot>
+                            `;
+            }
+        });
+</script>
+
+</body></html>

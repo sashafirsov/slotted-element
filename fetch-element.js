@@ -18,11 +18,11 @@ FetchElement extends HTMLElement
 {
     static get observedAttributes(){ return  [ 'src', 'method', 'headers', 'state', 'status', 'error', 'skiprender' ]; }
 
-    static get mime2mod(){ return   {   'application/json':'./render/json.js'
-                                    ,   'text/html': FetchElement.prototype.renderHtml
-                                    ,   'text/xml': FetchElement.prototype.renderHtml
-                                    ,   'application/xml': FetchElement.prototype.renderHtml
-                                    ,   'image/svg+xml': FetchElement.prototype.renderHtml
+    static get mime2mod(){ return   {   'application/json':async ()=>(await import('./render/json.js')).default
+                                    ,   'text/html': ()=>FetchElement.prototype.renderHtml
+                                    ,   'text/xml': ()=>FetchElement.prototype.renderHtml
+                                    ,   'application/xml': ()=>FetchElement.prototype.renderHtml
+                                    ,   'image/svg+xml': ()=>FetchElement.prototype.renderHtml
                                     }}
 
     get headers(){ return {} }
@@ -113,7 +113,7 @@ FetchElement extends HTMLElement
         {   if( this.hasAttribute('skiprender') )
                 return;
 
-            let mod = this.constructor.mime2mod[ this.contentType.split(';')[0] ];
+            let mod = await this.constructor.mime2mod[ this.contentType.split(';')[0] ]();
             if( typeof mod === 'string' )
                 mod = (await import(mod)).default;
 
@@ -142,8 +142,6 @@ FetchElement extends HTMLElement
     }
 
     getKeys( obj ){ return Object.keys( obj ); }
-
-
 }
 
 export default FetchElement;

@@ -16,7 +16,7 @@
     <html-demo-element legend="Custom renderer">
         <json-render-element src="doc.json"></json-render-element>
         <script type="module">
-            import FetchElement from '../fetch-element.js';
+            import {FetchElement} from '../slotted-element.js';
             window.customElements.define('json-render-element',
                 class JsonElement extends FetchElement
                 {

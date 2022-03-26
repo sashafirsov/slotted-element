@@ -1,12 +1,16 @@
-import FetchElement  from './fetch-element.js';
+import FE from './fetch-element.js';
 import { CssChain as $ } from 'css-chain';
+
+export * from './fetch-element.js';
+export const FetchElement = FE;
 
 function createNode( tag, prop, val ){ const el = document.createElement(tag); el[prop]=val; return el; }
 
+
     export class
-SlottedElement extends FetchElement
+SlottedElement extends FE
 {
-    static get observedAttributes(){ return  [ 'template', ...FetchElement.observedAttributes ]; }
+    static get observedAttributes(){ return  [ 'template', ...FE.observedAttributes ]; }
 
     connectedCallback()
     {   this._$ = $(this);

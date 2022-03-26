@@ -2,18 +2,17 @@
 <html lang="en-GB">
 <head>
     <meta charset="utf-8">
-    <style>
-        @import "demo.css";
-    </style>
+    <title>template - SlottedElement demo</title>
+    <style> @import "demo.css"; </style>
+    <script type="importmap">{"imports": {"css-chain": "../node_modules/css-chain/CssChain.js"}}</script>
+
     <script type="module" src="https://unpkg.com/html-demo-element@1.0.7/html-demo-element.js"></script>
     <script type="module" src="../slotted-element.js"></script>
-
 </head>
 <body>
 
 <h1> slotted-element with template demo </h1>
-<a href="https://github.com/sashafirsov/slotted-element"><img src="https://cdnjs.cloudflare.com/ajax/libs/octicons/8.5.0/svg/mark-github.svg">git</a> |
-<a href="index.html"> slotted-element demo </a>
+<slotted-element src="nav.html"></slotted-element>
 <p>
     <var>slotted-element</var> is web component implementing slots without shadow DOM. There are 3 ways of template use:
 </p>

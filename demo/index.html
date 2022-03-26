@@ -6,23 +6,14 @@
         @import "demo.css";
         svg{ height: 16rem; }
     </style>
-    <script type="importmap">
-        {
-            "imports": {
-                "css-chain": "../node_modules/css-chain/CssChain.js"
-            }
-        }
-    </script>
+    <script type="importmap">{"imports": {"css-chain": "../node_modules/css-chain/CssChain.js"}}</script>
     <script type="module" src="https://unpkg.com/html-demo-element@1.0.7/html-demo-element.js"></script>
     <script type="module" src="../slotted-element.js"></script>
 </head>
 <body>
 
 <h1> slotted-element demo </h1>
-<a href="https://github.com/sashafirsov/slotted-element"><img src="https://cdnjs.cloudflare.com/ajax/libs/octicons/8.5.0/svg/mark-github.svg">git</a> |
-<a href="render-from-json.html"> fetch-element demo </a> |
-<a href="template-demo.html"> template demo </a>
-
+<slotted-element src="nav.html"></slotted-element>
 <p>
     <var>slotted-element</var> is web component implementing slots without shadow DOM.
     It is based on <var>fetch-element</var> component to fetch data and render from retrieved JSON or HTML.
@@ -54,7 +45,7 @@
     <slotted-element src="doc.json">
         <fieldset>
             <legend> <b>doc.json</b> as table </legend>
-            <p slot="loaded" hidden>  </p>
+            <p slot="loaded" hidden>filled with key:value</p>
         </fieldset>
     </slotted-element>
 </html-demo-element>

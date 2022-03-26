@@ -1,17 +1,19 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>render table from json - FetchElement</title>
+    <style> @import "demo.css"; </style>
+    <script type="importmap">{"imports": {"css-chain": "../node_modules/css-chain/CssChain.js"}}</script>
     <script type="module" src="https://unpkg.com/html-demo-element@1.0.7/html-demo-element.js"></script>
-    <style>
-        @import "demo.css";
-    </style>
+    <script type="module" src="../slotted-element.js"></script>
 </head>
 <body>
 <h1> fetch-element render from JSON demo </h1>
-<a href="https://github.com/sashafirsov/slotted-element"><img src="https://cdnjs.cloudflare.com/ajax/libs/octicons/8.5.0/svg/mark-github.svg">git</a> |
-<a href="index.html"> slotted-element demo </a>
+<slotted-element src="nav.html"></slotted-element>
+<p>
+    <var>slotted-element</var> by default renders JSON as table. The rendering could be redefined:
+</p>
 <main>
     <html-demo-element legend="Custom renderer">
         <json-render-element src="doc.json"></json-render-element>

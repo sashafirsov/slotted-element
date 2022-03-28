@@ -7,8 +7,8 @@ are covering the typical UI tasks:
 3. control UI parts(slots) depending on fetch state.
 
 [![git](https://cdnjs.cloudflare.com/ajax/libs/octicons/8.5.0/svg/mark-github.svg) GitHub](https://github.com/sashafirsov/slotted-element)
-| Demo: [slotted-element](https://unpkg.com/slotted-element@1.1.1/dist/bundle/demo/index.html)
-, [fetch-element JSON as table](https://unpkg.com/slotted-element@1.1.1/dist/bundle/demo/render-from-json.html)
+| Demo: [slotted-element](https://unpkg.com/slotted-element-test@1.1.1/dist/bundle/demo/index.html)
+, [fetch-element JSON as table](https://unpkg.com/slotted-element-test@1.1.1/dist/bundle/demo/render-from-json.html)
 | [tests project](https://github.com/sashafirsov/slotted-element-test)
 
 [![NPM version][npm-image]][npm-url]

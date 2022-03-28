@@ -7,12 +7,13 @@ are covering the typical UI tasks:
 3. control UI parts(slots) depending on fetch state.
 
 [![git](https://cdnjs.cloudflare.com/ajax/libs/octicons/8.5.0/svg/mark-github.svg) GitHub](https://github.com/sashafirsov/slotted-element)
-| Demo: [slotted-element](https://unpkg.com/slotted-element@1.1/demo/index.html)
-, [fetch-element JSON as table](https://unpkg.com/slotted-element@1.1/demo/render-from-json.html)
+| Demo: [slotted-element](https://unpkg.com/slotted-element@1.1.1/demo/index.html)
+, [fetch-element JSON as table](https://unpkg.com/slotted-element@1.1.1/demo/render-from-json.html)
 | [tests project](https://github.com/sashafirsov/slotted-element-test)
 
 [![NPM version][npm-image]][npm-url]
 [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/slotted-element)
+[![coverage][coverage-image]][coverage-url]
 
 As slots **without shadow DOM** primarily would be used for displaying remotely fetched data, 
 the `slotted-element` is derived from `fetch-element`.
@@ -152,3 +153,5 @@ None, just a browser with Web Components support.
 [npm-image]:      https://img.shields.io/npm/v/slotted-element.svg
 [npm-url]:        https://npmjs.org/package/slotted-element
 [screenshot]:   ./demo/Screenshot-fetch-element.png
+[coverage-image]: https://unpkg.com/slotted-element-test@1.1.1/coverage/coverage.svg
+[coverage-url]:   https://unpkg.com/slotted-element-test@1.1.1/coverage/lcov-report/index.html

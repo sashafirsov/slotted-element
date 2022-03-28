@@ -77,7 +77,7 @@ SlottedElement extends FE
             .remove();
     }
 
-    slotClone( name ) // create slot to be modified before by slotAdd(node)
+    slotClone( name )
     {
         const slot = this.slots[ name ]
         if( !slot )
@@ -88,7 +88,7 @@ SlottedElement extends FE
         return ret;
     }
 
-    slotAdd( node ) // name or node created by slotClone(name)
+    slotAdd( node )
     {
         const slot = node.slot ? node: this.slotClone( node )
         ,      ref = this.$(`slot[name="${node.slot || node}"]`);

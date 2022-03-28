@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 /**
  * @returns Promise resolved when updated DOM is rendered by calling [requestIdleCallback](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestIdleCallback)
  * @param cb callback invoked on dom rendered, its return value passed back to wait4DomUpdated promise
@@ -64,20 +65,84 @@ export class FetchElement extends HTMLElement {
     status: string;
 
     /**
-     * @see [web component lifecycle](
+     * @see [web component lifecycle](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements#using_the_lifecycle_callbacks)
      */
     connectedCallback(): void;
+
+    /**
+     * set to true when fetch is initialized
+     */
     initialized: boolean;
+    /**
+     * @see [web component lifecycle](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements#using_the_lifecycle_callbacks)
+     */
     attributeChangedCallback(name: any, oldValue: any, newValue: any): void;
+
+    /**
+     * callback when `fetch()` is resolved.
+     * Sets `status`, `contentType`, `responseHeaders` and resolves the method for data
+     *   conversion according to content type.
+     * @param response
+     * @returns data promise from `response.json()` or `response.text()`
+     */
     onResponse(response: any): Promise<any>;
+
+    /**
+     * set by `onResponse()` to 'network error' in case of http code not in 200 range
+     */
     error: string;
-    contentType: any;
+    /**
+     * response.headers.get( 'content-type' )
+     */
+    contentType: string;
+    /**
+     * response.headers
+     */
     responseHeaders: any;
-    setContent(html: any): void;
+
+    /**
+     * pre-render callback to massage response data before `render()`
+     * @param data
+     */
+    setContent(data: any): void;
+
+    /**
+     * callback which check the contentType and invokes renderer from `mime2mod` map
+     * @param result
+     */
     onResult(result: any): Promise<any>;
+
+    /**
+     * callback to override the output HTML according to response outcome.
+     * @param data
+     * @param contentType
+     * @param httpCode
+     * @param responseHeaders
+     */
     render(data: any, contentType: any, httpCode: any, responseHeaders: any): void;
+
+    /**
+     * default rendering implementation which triggers  data and html transformation
+     * @param data
+     * @param contentType
+     * @param httpCode
+     * @param responseHeaders
+     * @param args
+     */
     renderHtml(data: any, contentType: any, httpCode: any, responseHeaders: any, ...args: any[]): Promise<void>;
+
+    /**
+     * callback on `fetch()` failure
+     * @param error
+     * @returns value for rejected promise
+     */
     onError(error: any): any;
+
+    /**
+     * override to limit or define the order of keys on json object to be rendered in table.
+     * @param obj
+     * @returns array of keys to be shown in HTML
+     */
     getKeys(obj: any): string[];
 }
 export default FetchElement;

@@ -82,7 +82,7 @@ It is more performant than separate template as there is no content cloning invo
 * `slotAdd( name )` clones slot node and inserts immediately after original slot
 * `slotsClear()` removes cloned slots from internal DOM
 
-Overrides for `fetched-element` to support following fetch() lifecycle slots `loading`, `error`, `done`;
+Overrides for `fetched-element` to support following fetch() lifecycle slots `loading`, `error`, `loaded`;
 * `fetch`, `onResponse`, `onResult`, `onError` overrides of `fetch-element` to switch slots according to state change
 
 ### Attributes

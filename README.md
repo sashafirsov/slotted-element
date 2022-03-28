@@ -29,8 +29,7 @@ The size of binary distribution bundle along with its dependency [CssChain](http
 is 11Kb. Bundle has export of `SlottedElement` along with `CssChain`.
 
 1. if JS served by CDN as in demo, skip this step. Otherwise, add `slotted-element` dependency into project via 
-   package manager like npm, yarn, bower, bit.dev. 
-   Or simply clone `fetch-element.js` and `slotted-element.js` into project tree
+   package manager like npm, yarn, bower, bit.dev.
 2. Import into page/module either by ES6 import or simple SCRIPT tag
 3. In page body add  
 ```html 
@@ -137,6 +136,7 @@ NOTE: for defining the payload in http request leave `src` undefined and call `f
 `fetch-element` could be self-sufficient without using a slots pattern: the `state` attribute is available to trigger 
 visibility of internal dom subtree branches by `[state="xxx"] ...` selector. 
 
+
 ## Credits
 The `fetch-element` is inspired by ideas of [iron-ajax](https://github.com/PolymerElements/iron-ajax) in regards of
 using properties for declarative programming. Unlike `iron-ajax` in `fetch-element` the primary use is not in data share 
@@ -147,8 +147,11 @@ The data and content rendering customization is done by callbacks via inheritanc
 reside in separate repository https://github.com/sashafirsov/slotted-element-test to avoid unnecessary dependency in 
 source repo and npm.
 
+# Typescript
+`import SlottedElement from 'slotted-element'` code has [typings](slotted-element.d.ts) along with JSDoc enabled. 
+
 # dependencies
-None, just a browser with Web Components support.
+[CssChain](https://github.com/sashafirsov/css-chain) for Light DOM implementation, and a browser with Web Components support.
 
 [npm-image]:      https://img.shields.io/npm/v/slotted-element.svg
 [npm-url]:        https://npmjs.org/package/slotted-element
